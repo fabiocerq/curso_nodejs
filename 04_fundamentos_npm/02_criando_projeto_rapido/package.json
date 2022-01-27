@@ -1,0 +1,14 @@
+{
+  "name": "02_criando_projeto_rapido",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+//para criar rápido > npm init -y => coloca todas respostas padrão => bom para testes
