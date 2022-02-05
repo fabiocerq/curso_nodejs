@@ -3,7 +3,8 @@ const chalk = require('chalk')
 const inquirer = require('inquirer')
 
 //módulos internos
-const fs = require('fs')
+const fs = require('fs');
+const { time } = require('console');
 
 operation();
 
@@ -17,6 +18,8 @@ function operation() {
             'Consultar Saldo',
             "Depositar",
             "Sacar",
+            "Transferência",
+            'Simular Investimento',
             'Sair'
         ],
     },
@@ -32,6 +35,10 @@ function operation() {
                 deposit();
             } else if (action === 'Sacar') {
                 withdraw();
+            } else if (action === 'Transferência') {
+                transfer();
+            } else if (action === 'Simular Investimento') {
+                investimentSimulation();
             } else if (action === 'Sair') {
                 console.log(chalk.bgBlue.black("Obrigado por usar o Accounts!"))
                 process.exit();
@@ -180,7 +187,7 @@ function getAccountBalance() {
 
         operation();
     })
-    .catch(err => console.log(err))
+        .catch(err => console.log(err))
 }
 
 //sacando dinheiro
@@ -197,7 +204,7 @@ function withdraw() {
             return withdraw();
         }
 
-        inquirer.prompt ([
+        inquirer.prompt([
             {
                 name: 'amount',
                 message: 'Quantos você deseja sacar?'
@@ -205,23 +212,23 @@ function withdraw() {
         ]).then((answer) => {
 
             const amount = answer['amount']
-            
+
             removeAmount(accountName, amount)
         })
-        .catch(err => console.log(err))
+            .catch(err => console.log(err))
     })
-    .catch(err => console.log(err))
+        .catch(err => console.log(err))
 }
 
 function removeAmount(accountName, amount) {
 
     const accountData = getAccount(accountName);
-    if(!amount) {
+    if (!amount) {
         console.log(chalk.bgRed.black('Ocorreu um erro. Tente novamente mais tarde.'))
         return withdraw();
     }
 
-    if(accountData.balance < amount) {
+    if (accountData.balance < amount) {
         console.log(chalk.bgRed.black('Valor indisponível!'))
         return withdraw();
     }
@@ -240,3 +247,113 @@ function removeAmount(accountName, amount) {
     operation();
 }
 
+//transferência de valor
+function transfer() {
+    inquirer.prompt([
+        {
+            name: 'accountName',
+            message: 'Qual a sua conta?'
+        }
+    ]).then((answer) => {
+        const accountName = answer['accountName']
+
+        if (!checkAccount(accountName)) {
+            return transfer();
+        }
+
+        inquirer.prompt([
+            {
+                name: 'accountNameDestiny',
+                message: 'Qual a conta a receber a transferência?'
+            }
+        ]).then((answer) => {
+            const accountNameDestiny = answer['accountNameDestiny']
+            
+            if (!checkAccount(accountNameDestiny)) {
+                return transfer();
+            }
+
+            inquirer.prompt([
+                {
+                    name: 'amount',
+                    message: 'Quanto você deseja transferir?'
+                }
+            ]).then((answer) => {
+
+                const amount = answer['amount']
+
+                removeAmount(accountName, amount)
+                addAmount(accountNameDestiny, amount)
+            })
+                .catch(err => console.log(err))
+
+        }).catch(err => console.log(err));
+
+    }).catch(err => console.log(err));
+
+}
+
+//simulação de investimento
+function investimentSimulation() {
+    inquirer.prompt([
+        {
+            name: 'accountName',
+            message: 'Qual a sua conta?'
+        }
+
+    ]).then((answer) => {
+        const accountName = answer['accountName'];
+
+        if (!checkAccount(accountName)) {
+            return investimentSimulation();
+        }
+
+        inquirer.prompt([
+            {
+                name: 'time',
+                message: 'Para quantos meses gostaria de fazer a simulação?'
+            }
+        ]).then((answer) => {
+            const time = answer['time'];
+
+            if(time <= 0) {
+                console.log(chalk.bgRed.black('Ocorreu um erro. Tente novamente mais tarde.'))
+                return investimentSimulation();
+            }
+
+            inquirer.prompt([
+                {
+                    name: 'fee',
+                    message: 'Escolha a taxa de juros(1%/1,5%/2,7%): '
+                }
+            ]).then((answer) => {
+                const fee = answer['fee'];
+
+                if(fee != 1) {
+                    if (fee != 1.5) {
+                        if (fee != 2.7) {
+                            console.log(chalk.bgRed.black('Ocorreu um erro. Tente novamente mais tarde.'))
+                            return investimentSimulation();
+                        }
+                    } 
+                }                 
+
+                finalAmount(accountName, time, fee);
+
+            }).catch(err => console.log(err))
+           
+        }).catch(err => console.log(err))
+
+    }).catch(err => console.log(err))
+}
+
+function finalAmount(accountName, time, fee) {
+    
+    const accountData = getAccount(accountName);
+    var totalAmount = 0;
+
+    totalAmount = accountData.balance * (1 + (fee/100)) ** time;
+
+    console.log(`Saldo atual: ${accountData.balance}`)
+    console.log(`Saldo futuro: ${totalAmount}`);
+} 
