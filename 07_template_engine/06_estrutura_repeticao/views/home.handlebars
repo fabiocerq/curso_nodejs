@@ -1,0 +1,12 @@
+<h1>Olá, Handlebars!</h1>
+<p>O nome do usuário é {{user.name}} {{user.surname}} </p>
+{{#if approved}}
+    <p>Parabéns! Seu cadastro foi aprovado!</p>
+{{else}}
+    <p>Cadastro não encontrado! Você precisa de aprovação para seguir.</p>
+{{/if}}
+
+{{#if auth}}
+    <p>Autenticação confirmada!</p>
+    <p>Clique<a href="/dashboard"> aqui</a> para acessar área de membros!</p>
+{{/if}}
