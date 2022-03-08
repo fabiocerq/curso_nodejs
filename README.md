@@ -8,3 +8,4 @@ Seção 4 - Fundamentos do NPM;
 Seção 5 - Projeto 1: Accounts
 Seção 6 - Introdução ao Express;
 Seção 7 - Template Engine com Express;
+Seção 8 - Integração de Node com MySQL;
