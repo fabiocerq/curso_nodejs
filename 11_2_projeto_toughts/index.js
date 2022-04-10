@@ -77,7 +77,7 @@ app.get('/', ToughtsController.showToughts)
 
 //execução do app
 conn
-    //.sync({force: true}) => criação da ligação entre tabelas
+    //.sync({force: true}) criação da ligação entre tabelas
     .sync()
     .then(() => {
         app.listen(3000)
