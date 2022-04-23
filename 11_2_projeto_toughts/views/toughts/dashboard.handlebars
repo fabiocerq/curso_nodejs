@@ -4,4 +4,22 @@
         <a href="/toughts/add" class='btn'>Criar Pensamento</a>  
     </div>
     <h3>Seus Pensamentos</h3>
+    <ul>
+        {{#each toughts}}
+            <li>
+                <span class="label">{{this.title}}</span>
+                <span class="actions">
+                    <a href="/toughts/edit/{{this.id}}" class="btn">Editar</a>
+                    <form action="/toughts/remove" method="POST">
+                        <input type="hidden" name="id" value="{{this.id}}">
+                        <input type="submit" value="Excluir" class="btn">
+                    </form>
+                </span>
+            </li>
+        {{/each}}
+    </ul>
+
+    {{#if emptyToughts}}
+        <p>Ainda não há nenhum pensamento seu! Crie um <a href="/toughts/add">Aqui!</a></p>
+    {{/if}}
 </div>
