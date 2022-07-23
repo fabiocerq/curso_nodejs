@@ -12,4 +12,5 @@ Seção 8 - Integração de Node com MySQL;
 Seção 9 - Utilizando o Sequelize com NodeJS;
 Seção 10 - Arquitetura MVC com Node.js;
 Seção 11 - Projeto 2: Toughts (Express, Sequelize e MVC);
-Seção 12 - NodeJS com MongoDB
+Seção 12 - NodeJS com MongoDB;
+Seção 13 - Adaptando Mongoose ao Projeto;
