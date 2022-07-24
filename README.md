@@ -14,3 +14,4 @@ Seção 10 - Arquitetura MVC com Node.js;
 Seção 11 - Projeto 2: Toughts (Express, Sequelize e MVC);
 Seção 12 - NodeJS com MongoDB;
 Seção 13 - Adaptando Mongoose ao Projeto;
+Seção 14 - Introdução a APIs;
